@@ -120,8 +120,13 @@ terraform output
 
 The primary way to interact with your AI playground is through the SageMaker Jupyter Notebook.
 
-1. Run terraform output to get the notebook_instance_url.
-
+1. Run terraform output to get the notebook_instance_url.  You will see the following example output below.  Just grab the ```notebook_instance_url``` from the output:
+```
+notebook_instance_name = "cisco-foundation-cookbook-r267j"
+notebook_instance_url = "https://cisco-foundation-cookbook-r267j.notebook.us-east-1.sagemaker.aws/tree"
+sagemaker_endpoint_name = "foundation-sec-8b-endpoint"
+sagemaker_endpoint_url = "https://runtime.sagemaker.us-east-1.amazonaws.com/endpoints/foundation-sec-8b-endpoint/invocations"
+```
 2. Open this URL in your browser. This will take you to the JupyterLab interface running on your notebook instance.
 
 3. Inside the file browser, you will see a folder named cisco-foundation-notebooks. This contains the pre-loaded examples ready for you to run.
@@ -130,18 +135,29 @@ The primary way to interact with your AI playground is through the SageMaker Jup
 
 * **SageMaker Endpoint:** You can monitor the status of the model endpoint creation in the AWS Console under SageMaker > Inference > Endpoints. Wait for the status to change to InService.
 
-* **Notebook Instance:** The notebook instance runs a startup script. You can view the logs for this script in CloudWatch Logs under the log group ```/aws/sagemaker/NotebookInstances``` to ensure the sample repository was cloned correctly.
+* **Notebook Instance:** The notebook instance runs a startup script. You can view the logs for this script in CloudWatch Logs under the log group ```/aws/sagemaker/NotebookInstances``` to ensure the sample repository was cloned correctly.  Look for a log stream ending with the name ```LifecycleConfigOnCreate```.  This should correlate with the commands in your jupyter notebook creation, under the ```notebook_instance.tf``` file, under ```on_create```.
 
 ## Testing the Inference Endpoint
 The playground provides two main ways to test your model endpoint:
 
 1. Using the Pre-loaded Jupyter Notebooks
 
-This is the easiest method. Simply open one of the notebooks. They are already configured with the correct endpoint name and use the boto3 SDK to send inference requests.
+The notebook instance has an on_create setup that downloads from the following repository containing some security notebooks built for Cisco's foundation-sec-8b-instruct model:  
+https://github.com/iknowjason/cisco-foundation-notebooks
+
+These notebooks were modified from the original work done [1] in order to support using the Sagemaker client runtime to run against the separate endpoint created through terraform.  This separation of notebook R&D from model hosting + endpoint makes it easier to scale and experiment with separate solutions.
+[1] https://github.com/cisco-foundation-ai/cookbook
+
+This is the easiest method. Simply open one of the notebooks. They are already configured with the correct endpoint name and use the boto3 SDK to send inference requests.  Below are some screens showing a quick tutorial of these steps.
+
+
 
 2. Using the Sample Python Script
 
-A sample script, ```test_inference.py```, is included in this repository to show how you can invoke the endpoint from any machine with AWS credentials for your account.
+A sample script, ```test_inference.py```, is included in this repository to show how you can invoke the endpoint from any machine with AWS credentials for your account.  While authenticated with your AWS account, simply run the script:
+```
+python3 inference_query1.py
+```
 
 # License
 This project is licensed under the MIT License, which allows for reuse and modification with attribution. See the LICENSE file for details. All included third-party tools and libraries maintain their respective licenses. Enjoy your AI playground responsibly!
