@@ -126,6 +126,12 @@ The primary way to interact with your AI playground is through the SageMaker Jup
 
 3. Inside the file browser, you will see a folder named cisco-foundation-notebooks. This contains the pre-loaded examples ready for you to run.
 
+## Monitoring the Deployment
+
+* **SageMaker Endpoint:** You can monitor the status of the model endpoint creation in the AWS Console under SageMaker > Inference > Endpoints. Wait for the status to change to InService.
+
+* **Notebook Instance:** The notebook instance runs a startup script. You can view the logs for this script in CloudWatch Logs under the log group /aws/sagemaker/NotebookInstances to ensure the sample repository was cloned correctly.
+
 # License
 This project is licensed under the MIT License, which allows for reuse and modification with attribution. See the LICENSE file for details. All included third-party tools and libraries maintain their respective licenses. Enjoy your AI playground responsibly!
 
