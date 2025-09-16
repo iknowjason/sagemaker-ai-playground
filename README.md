@@ -30,10 +30,10 @@ The environment automatically deploys Cisco's Foundation-Sec-8B-Instruct, an ope
 
 This playground uses the following SageMaker instances by default. These can be customized in the Terraform files.
 
-| Resource | Instance Type | vCPU | Memory (GiB) | GPU Memory (GiB) | Hourly Cost |
+| Resource | Instance Type | vCPU | Memory (GiB) | GPU Memory (GiB) | Hourly Cost (us-east-1) |
 | :------- | :------: | -------: | -------: | -------: | -------: | 
 | SageMaker Endpoint | ml.g5.2xlarge | 8 | 32 | 24 | $1.388 |
-| SageMaker Notebook | ml.t3.medium | 2 | 4 | NA | $1.388 |
+| SageMaker Notebook | ml.t3.medium | 2 | 4 | NA | $.058 |
 
 **Note:** Always check the [AWS SageMaker Pricing page](https://aws.amazon.com/sagemaker/pricing/) to confirm the latest pricing in your region. The ```ml.g5.2xlarge``` instance is the recommended minimum for hosting the 8-billion parameter Foundation model.
 
