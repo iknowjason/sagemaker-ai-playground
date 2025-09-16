@@ -130,7 +130,18 @@ The primary way to interact with your AI playground is through the SageMaker Jup
 
 * **SageMaker Endpoint:** You can monitor the status of the model endpoint creation in the AWS Console under SageMaker > Inference > Endpoints. Wait for the status to change to InService.
 
-* **Notebook Instance:** The notebook instance runs a startup script. You can view the logs for this script in CloudWatch Logs under the log group /aws/sagemaker/NotebookInstances to ensure the sample repository was cloned correctly.
+* **Notebook Instance:** The notebook instance runs a startup script. You can view the logs for this script in CloudWatch Logs under the log group ```/aws/sagemaker/NotebookInstances``` to ensure the sample repository was cloned correctly.
+
+## Testing the Inference Endpoint
+The playground provides two main ways to test your model endpoint:
+
+1. Using the Pre-loaded Jupyter Notebooks
+
+This is the easiest method. Simply open one of the notebooks. They are already configured with the correct endpoint name and use the boto3 SDK to send inference requests.
+
+2. Using the Sample Python Script
+
+A sample script, ```test_inference.py```, is included in this repository to show how you can invoke the endpoint from any machine with AWS credentials for your account.
 
 # License
 This project is licensed under the MIT License, which allows for reuse and modification with attribution. See the LICENSE file for details. All included third-party tools and libraries maintain their respective licenses. Enjoy your AI playground responsibly!
