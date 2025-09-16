@@ -160,8 +160,11 @@ notebook_instance_url = "https://cisco-foundation-cookbook-r267j.notebook.us-eas
 Click on the ```cisco-foundation-notebooks``` directory as shown below.
 ![sm1](images/sm1.png "sm1")
 
-You will see several of the nice notebooks created by Cisco researchers for demonstrating Cybersecurity use cases with the Foundation-sec-8b-instruct model.
-![sm2](images/sm1.png "sm2")
+You will see several of the nice notebooks created by Cisco researchers for demonstrating Cybersecurity use cases with the Foundation-sec-8b-instruct model.  Click on the ```quickstart_instruct.ipynb``` notebook.
+![sm2](images/sm2.png "sm2")
+
+![sm3](images/sm3.png "sm3")
+
 
 2. Using the Sample Python Script
 
