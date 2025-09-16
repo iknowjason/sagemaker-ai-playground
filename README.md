@@ -153,9 +153,15 @@ These notebooks were modified from the original work done by Cisco researchers [
 This is the easiest method. Simply open one of the notebooks. They are already configured with the correct endpoint name and use the boto3 SDK to send inference requests.  Below are some screens showing a quick tutorial of these steps.
 
 Grab the notebook_instance_url from the output of terraform.  It will look similar to this line (as an example):
+```
 notebook_instance_url = "https://cisco-foundation-cookbook-r267j.notebook.us-east-1.sagemaker.aws/tree"
+```
 
+Click on the ```cisco-foundation-notebooks``` directory as shown below.
 ![sm1](images/sm1.png "sm1")
+
+You will see several of the nice notebooks created by Cisco researchers for demonstrating Cybersecurity use cases with the Foundation-sec-8b-instruct model.
+![sm2](images/sm1.png "sm2")
 
 2. Using the Sample Python Script
 
