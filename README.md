@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to the SageMaker AI Playground! 🤖 This repository provides a Terraform-based lab environment designed to deploy a robust AI research environment on AWS using SageMaker AI MLOps managed services. It separates the model hosting from the development environment for better scalability and cost management.
+Welcome to the SageMaker AI Playground! 🤖 This repository provides a Terraform-based lab environment designed to deploy a robust AI research environment on AWS using **SageMaker AI** MLOps managed services. It separates the model hosting from the development environment for better production scalability and cost management.
 
 This project was created to provide a ready-to-use "playground" for running generative AI workloads, specifically for cybersecurity research, with minimal manual setup. It deploys two core, decoupled resources:
 
@@ -12,13 +12,29 @@ This project was created to provide a ready-to-use "playground" for running gene
 
 The environment automatically deploys Cisco's Foundation-Sec-8B-Instruct, an open-weight, 8-billion parameter instruction-tuned language model specialized for cybersecurity applications.
 
+## Key Features
+
+* Managed GPU Inference: Deploys a powerful SageMaker Endpoint on a ml.g5.2xlarge instance, optimized for hosting LLMs without the need to manage servers, Docker, or NVIDIA drivers.  This resource is created via ```model_endpoint_instance.tf```.
+
+* Hugging Face TGI Container: Uses the official Hugging Face Text Generation Inference container for high-performance, production-ready model serving.
+
+* Pre-configured Notebook Environment: Launches a SageMaker Notebook instance that automatically clones a repository of cybersecurity use-case notebooks and configures them to use the deployed model endpoint.  The Sagemaker Jupyter notebook is created via ```notebook_instance.tf```.
+
+* Scalable Architecture: By separating the notebook from the inference endpoint, you can stop the notebook to save costs while keeping the model available, or scale them independently.  You can also use the model endpoint with other applications instead of the Jupyter Notebook.  A sample python script (inference_query1.py) to run inference against the endpoint is included that uses Boto3 sagemaker client.
+
+* Ready-to-Use Cyber Security Model: Automatically deploys the ```fdtn-ai/Foundation-Sec-8B-Instruct``` model from Hugging Face.  This represents your own private LLM model hosting and inference endpoint for Cyber Security use cases.
+
+
 ## Estimated Cost
-**Disclaimer:** Deploying this playground will incur AWS charges on your account. The primary cost is the GPU EC2 instance.  This playground uses Amazon EC2 [G5 instances](https://aws.amazon.com/ec2/instance-types/g5/).  This can be customized in [variables.tf](https://github.com/iknowjason/gpu-ai-playground/blob/main/variables.tf#L11).   The cost of the default ```g5.2xlarge``` instance is $1.212 per hour for On-Demand usage. Based on my research and testing this is the most cost effective and minimal hardware for running a GPU instance with an 8 billion parameter model such as [Cisco's Foundation-Sec-8b-Instruct](https://huggingface.co/fdtn-ai/Foundation-Sec-8B-Instruct) model with both native PyTorch FastAPI inference server as well as Quantized f16 model hosted through Ollama.
+**Disclaimer:** Deploying this playground will incur AWS charges. The costs are primarily driven by the SageMaker Endpoint and Notebook instances. You are billed for the time they are in the InService state.
+
+This playground uses the following SageMaker instances by default. These can be customized in the Terraform files.
 
 **Instance Information:**  Check the AWS Pricing page to confirm the latest pricing.
-| Instance Family | Instance Size | Hourly Cost | vCPU | Memory | GPU Memory |
-| :------- | :------: | -------: | -------: | -------: | -------: |  
-| G5 | G5.2xlarge | $1.212 | 8 | 32 | 24 |
+| Resource | Instance Type | vCPU | Memory (GiB) | GPU Memory (GiB) | Hourly Cost |
+| :------- | :------: | -------: | -------: | -------: | -------: |  -------: |
+| SageMaker Endpoint | ml.g5.2xlarge | 8 | 32 | 24 | $1.388 |
+| SageMaker Notebook | ml.t3.medium | 2 | 4 | NA | $1.388 |
 
 
 **To manage costs:**
