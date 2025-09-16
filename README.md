@@ -70,7 +70,14 @@ export AWS_SECRET_ACCESS_KEY="VALUE"
 ```
 
 ## Hugging Face Setup ##
-Get your Hugging Face access token ready.  Add it to the default parameter under the ```model_endpoint_instance.tf``` file just right here:
+The Cisco Foundation Model requires you to accept a user agreement and use a Hugging Face token for access.
+1. Go to the [Foundation-Sec-8B-Instruct](https://huggingface.co/fdtn-ai/Foundation-Sec-8B-Instruct) model card and accept the terms.
+2. Set up an account on https://huggingface.co.  Generate a Hugging Face User Access Token with read permissions from your Hugging Face settings page.
+3. Set the token as an environment variable so Terraform can access it:
+```
+export TF_VAR_hf_token="YOUR_HUGGING_FACE_TOKEN"
+```
+Or you can add it to the default parameter under the ```model_endpoint_instance.tf``` file just right here:
 ```
 variable "hf_token" {
   description = "Hugging Face API token with access to the Cisco Foundation Model"
@@ -80,8 +87,6 @@ variable "hf_token" {
 }
 ```
 The Hugging Face access token is used on the Sagemaker container with Text Generation Inference (TGI) to load the model.  You can read more about TGI [here](https://huggingface.co/docs/text-generation-inference/en/index).
-
-## Build and Destroy Resources
 
 ### Run terraform init
 Change into the ```sagemaker-ai-playground``` working directory and type:
@@ -113,8 +118,13 @@ terraform output
 
 # Details and Usage
 
+The primary way to interact with your AI playground is through the SageMaker Jupyter Notebook.
 
+1. Run terraform output to get the notebook_instance_url.
 
+2. Open this URL in your browser. This will take you to the JupyterLab interface running on your notebook instance.
+
+3. Inside the file browser, you will see a folder named cisco-foundation-notebooks. This contains the pre-loaded examples ready for you to run.
 
 # License
 This project is licensed under the MIT License, which allows for reuse and modification with attribution. See the LICENSE file for details. All included third-party tools and libraries maintain their respective licenses. Enjoy your AI playground responsibly!
