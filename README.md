@@ -1,20 +1,16 @@
-# GPU AI Playground
+# Sagemaker AI Playground
 
 ## Overview
 
-GPU AI Playground is a Terraform-based lab environment designed to easily deploy a NVIDIA GPU-enabled EC2 instance on AWS for experimenting with AI models and applications. I've been using it in research for my own Cyber Security use cases but it can be used for any LLM self-hosting inference lab purpose you can imagine.  This template sets up all necessary cloud infrastructure and bootstraps the GPU instance with required software (i.e., NVIDIA drivers, Docker, AI frameworks) via a user-data script. You can easily adapt it to scale up or down on the GPU instance, and adapt the cloud-init user_data script for any customizations.  On launch, the instance is auto-configured (via cloud-init user-data) with GPU drivers, workflow automation tools (n8n), and AI management frameworks (Ollama, Open WebUI). The GPU AI Playground is ideal for those who want to quickly spin up a personal AI sandbox in the cloud without manually installing CUDA, frameworks, and tooling.  The goal is to provide a ready-to-use "playground" for running generative AI workloads with minimal manual setup.  It's designed to bootstrap a server with all the necessary components to run local Large Language Models (LLMs), including the container runtime, NVIDIA drivers, private inference server with endpoints, and a pre-loaded Cyber Security language model.
+Welcome to the SageMaker AI Playground! 🤖 This repository provides a Terraform-based lab environment designed to deploy a robust AI research environment on AWS using SageMaker AI MLOps managed services. It separates the model hosting from the development environment for better scalability and cost management.
 
-The environment automatically deploys the [n8n Self-Hosted AI Starter Kit](https://github.com/iknowjason/self-hosted-ai-starter-kit) integated with Cisco's [Foundation-Sec-8B-Instruct](https://huggingface.co/fdtn-ai/Foundation-Sec-8B-Instruct), an open-weight, 8-billion parameter instruction-tuned language model specialized for cybersecurity applications.
+This project was created to provide a ready-to-use "playground" for running generative AI workloads, specifically for cybersecurity research, with minimal manual setup. It deploys two core, decoupled resources:
 
-* **GPU-Accelerated EC2 Instance**: An Ubuntu 22.04 server ready for AI workloads.
-* **NVIDIA & Docker Stack**: Installs NVIDIA drivers, the NVIDIA Container Toolkit, and configures Docker to leverage the GPU.
-* **Multiple Inference Endpoints**:
-    * **Ollama**: Manages and serves the LLM.
-    * **Open WebUI**: Provides a user-friendly, ChatGPT-like interface for interacting with the model.
-    * **PyTorch/FastAPI Server**: A native Python-based inference API for high-performance programmatic access.
-* **Pre-loaded Quantized AI Cyber Security Model**: Automatically downloads and configures the `Mungert/Foundation-Sec-8B-Instruct-GGUF` model from Hugging Face.
-* **Foundation Instruct Model with Native Pytorch Inference:** Downloads and runs the Foundation-Sec-8B-Instruct model for better inference performance using a FastAPI exposed endpoint.
-* **Automated HTTPS**: Caddy is used as a reverse proxy to provide secure HTTPS access to the web interfaces.
+1. A SageMaker Model Endpoint: A dedicated, GPU-accelerated (ml.g5.2xlarge) environment for hosting a large language model. It uses the Hugging Face TGI (Text Generation Inference) container to serve the model efficiently.
+
+2. A SageMaker Notebook Instance: A cost-effective CPU instance (ml.t3.medium) that serves as your development environment. It comes pre-loaded with sample Jupyter notebooks that are automatically configured to interact with the model sagemaker endpoint.
+
+The environment automatically deploys Cisco's Foundation-Sec-8B-Instruct, an open-weight, 8-billion parameter instruction-tuned language model specialized for cybersecurity applications.
 
 ## Estimated Cost
 **Disclaimer:** Deploying this playground will incur AWS charges on your account. The primary cost is the GPU EC2 instance.  This playground uses Amazon EC2 [G5 instances](https://aws.amazon.com/ec2/instance-types/g5/).  This can be customized in [variables.tf](https://github.com/iknowjason/gpu-ai-playground/blob/main/variables.tf#L11).   The cost of the default ```g5.2xlarge``` instance is $1.212 per hour for On-Demand usage. Based on my research and testing this is the most cost effective and minimal hardware for running a GPU instance with an 8 billion parameter model such as [Cisco's Foundation-Sec-8b-Instruct](https://huggingface.co/fdtn-ai/Foundation-Sec-8B-Instruct) model with both native PyTorch FastAPI inference server as well as Quantized f16 model hosted through Ollama.
