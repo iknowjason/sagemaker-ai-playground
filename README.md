@@ -1,5 +1,7 @@
 # Sagemaker AI Playground
 
+![sagemaker1](images/sagemaker1.png "sagemaker1")
+
 ## Overview
 
 Welcome to the SageMaker AI Playground! 🤖 This repository provides a Terraform-based lab environment designed to deploy a robust AI research environment on AWS using **SageMaker AI** MLOps managed services. It separates the model hosting from the development environment for better production scalability and cost management.
