@@ -170,15 +170,15 @@ Select the default ```conda_python3``` kernel as delineated below.
 
 ![sm3](images/sm3.png "sm3")
 
-Click on the first cell under **Configuration** and run the code.  It should show the output as shown in the image below.  If this is your first time running Jupyter notebooks: In a Jupyter Notebook, the "run code cell" button is typically represented by a play icon (►).
+Click on the first cell under **Configuration** and run the code.  It should show the output as shown in the image below.  If this is your first time running Jupyter notebooks: In a Jupyter Notebook, the ```run code cell``` button is typically represented by a play icon (►).
 
 ![sm4](images/sm4.png "sm4")
 
-Run the next cell for the **Prerequisites Installation** by just clicking on the play icon again.  This might take some time.  It will show an * (Asterisk) while running and then show a number when complete.  You should see the output as shown below with ```Required packages installed successfully!```.
+Run the next cell for the **Prerequisites Installation** by just clicking on the play icon again.  This might take some time.  It will show an ***** (Asterisk) while running and then show a number when complete.  You should see the output as shown below with ```Required packages installed successfully!```.
 
 ![sm6](images/sm6.png "sm6")
 
-Run the next code cell to initialize the sagemaker client.  It should shown a successfull connection to your model hosting and inference endpoint that was managed by terraform in ```model_endpoint_instance.tf```.  You should be able to see the power, efficiency, and scalability of separating this development notebook from the actual model hosting and inference resources.  
+Run the next code cell to initialize the sagemaker client.  It should show a successfull connection to your model hosting and inference endpoint that was managed by terraform in ```model_endpoint_instance.tf```.  You should be able to see the power, efficiency, and scalability of separating this development notebook from the actual model hosting and inference resources.  
 
 ![sm7](images/sm7.png "sm7")
 
@@ -186,6 +186,7 @@ Run the next code cell for a sample invoking of the endpoint with an prompt inpu
 
 ![sm8](images/sm8.png "sm8")
 
+Nice work!  Now you are setup for success.  Go back to the main directory and select one of the other Jupyter notebooks.  Since you have installed the pre-requisites, you can now run any of the Cyber Security use cases developed by [Cisco Reseachers](https://github.com/cisco-foundation-ai/cookbook).
 
 2. Using the Sample Python Script
 
