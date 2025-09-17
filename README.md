@@ -178,11 +178,11 @@ Run the next cell for the **Prerequisites Installation** by just clicking on the
 
 ![sm6](images/sm6.png "sm6")
 
-Some text below.
+Run the next code cell to initialize the sagemaker client.  It should shown a successfull connection to your model hosting and inference endpoint that was managed by terraform in ```model_endpoint_instance.tf```.  You should be able to see the power, efficiency, and scalability of separating this development notebook from the actual model hosting and inference resources.  
 
 ![sm7](images/sm7.png "sm7")
 
-Some text below.
+Run the next code cell for a sample invoking of the endpoint with an prompt input related to Cyber Security.  Now you can see the inference() function called that is invoking your SageMaker endpoint.  You can use the boto3 client or even adapt code to an OpenAI API compatible curl request for private LLM inference.
 
 ![sm8](images/sm8.png "sm8")
 
