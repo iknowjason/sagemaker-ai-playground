@@ -175,6 +175,8 @@ A sample script, ```test_inference.py```, is included in this repository to show
 ```
 python3 inference_query1.py
 ```
+You should see similar output of the following:
+![sm5](images/sm5.png "sm5")
 
 # License
 This project is licensed under the MIT License, which allows for reuse and modification with attribution. See the LICENSE file for details. All included third-party tools and libraries maintain their respective licenses. Enjoy your AI playground responsibly!
