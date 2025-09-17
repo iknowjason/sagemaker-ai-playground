@@ -170,11 +170,11 @@ Select ```conda_python3``` kernel.
 
 ![sm3](images/sm3.png "sm3")
 
-You will need to click through and run code for the first few cells.  This will install the pre-requisite python libraries needed for the demo code.
+Click on the first cell under **Configuration** and run the code.  It should show the output as shown in the image below.  If this is your first time running Jupyter notebooks: In a Jupyter Notebook, the "run code cell" button is typically represented by a play icon (►).
 
 ![sm4](images/sm4.png "sm4")
 
-Some text below.
+Run the next cell for the **Prerequisites Installation** by just clicking on the play icon again.  This might take some time.  It will show an * (Asterisk) while running and then show a number when complete.  You should see the output as shown below with ```Required packages installed successfully!```.
 
 ![sm6](images/sm6.png "sm6")
 
