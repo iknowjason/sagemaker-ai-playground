@@ -174,7 +174,7 @@ Click on the first cell under **Configuration** and run the code.  It should sho
 
 ![sm4](images/sm4.png "sm4")
 
-Run the next cell for the **Prerequisites Installation** by just clicking on the play icon again.  This might take some time.  It will show an ***** (Asterisk) while running and then show a number when complete.  You should see the output as shown below with ```Required packages installed successfully!```.
+Run the next cell for the **Prerequisites Installation** by just clicking on the play icon again.  This might take some time.  It will show an * (Asterisk) while running and then show a number when complete.  You should see the output as shown below with ```Required packages installed successfully!```.
 
 ![sm6](images/sm6.png "sm6")
 
