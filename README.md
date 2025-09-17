@@ -167,11 +167,25 @@ You will see several of the nice notebooks created by Cisco researchers for demo
 ![sm2](images/sm2.png "sm2")
 
 Select ```conda_python3``` kernel.
+
 ![sm3](images/sm3.png "sm3")
 
 You will need to click through and run code for the first few cells.  This will install the pre-requisite python libraries needed for the demo code.
 
 ![sm4](images/sm4.png "sm4")
+
+Some text below.
+
+![sm6](images/sm6.png "sm6")
+
+Some text below.
+
+![sm7](images/sm7.png "sm7")
+
+Some text below.
+
+![sm8](images/sm8.png "sm8")
+
 
 2. Using the Sample Python Script
 
