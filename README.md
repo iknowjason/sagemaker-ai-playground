@@ -120,7 +120,7 @@ terraform output
 
 The primary way to interact with your AI playground is through the SageMaker Jupyter Notebook.
 
-1. Run terraform output to get the notebook_instance_url.  You will see the following example output below.  Just grab the ```notebook_instance_url``` from the output:
+1. Run terraform output to get the ```notebook_instance_url```.  You will see the following example output below.  Just grab the ```notebook_instance_url``` from the output:
 ```
 notebook_instance_name = "cisco-foundation-cookbook-r267j"
 notebook_instance_url = "https://cisco-foundation-cookbook-r267j.notebook.us-east-1.sagemaker.aws/tree"
@@ -153,7 +153,7 @@ These notebooks were modified from the original work done by Cisco researchers [
 
 This is the easiest method. Simply open one of the notebooks. They are already configured with the correct endpoint name and use the boto3 SDK to send inference requests.  Below are some screens showing a quick tutorial of these steps.
 
-Grab the notebook_instance_url from the output of terraform.  It will look similar to this line (as an example):
+Grab the ```notebook_instance_url``` from the output of terraform.  It will look similar to this line (as an example):
 ```
 notebook_instance_url = "https://cisco-foundation-cookbook-r267j.notebook.us-east-1.sagemaker.aws/tree"
 ```
