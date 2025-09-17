@@ -166,7 +166,7 @@ You will see several of the nice notebooks created by Cisco researchers for demo
 
 ![sm2](images/sm2.png "sm2")
 
-Select ```conda_python3``` kernel.
+Select the default ```conda_python3``` kernel as delineated below.
 
 ![sm3](images/sm3.png "sm3")
 
