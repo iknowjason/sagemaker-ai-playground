@@ -148,6 +148,7 @@ https://github.com/iknowjason/cisco-foundation-notebooks
 You can adapt and change the setup of this compute notebook instance or change the repository automatically downloaded.  See this [line](https://github.com/iknowjason/sagemaker-ai-playground/blob/main/notebook_instance.tf#L49) for reference.
 
 These notebooks were modified from the original work done by Cisco researchers [1] to support using the Sagemaker client runtime to run inference against the hosted endpoint.  All of this created with terraform.  This separation of notebook R&D from model hosting + endpoint makes it easier to scale and experiment with separate solutions.
+
 [1] https://github.com/cisco-foundation-ai/cookbook
 
 This is the easiest method. Simply open one of the notebooks. They are already configured with the correct endpoint name and use the boto3 SDK to send inference requests.  Below are some screens showing a quick tutorial of these steps.
