@@ -163,12 +163,14 @@ Click on the ```cisco-foundation-notebooks``` directory as shown below.
 ![sm1](images/sm1.png "sm1")
 
 You will see several of the nice notebooks created by Cisco researchers for demonstrating Cybersecurity use cases with the Foundation-sec-8b-instruct model.  Click on the ```quickstart_instruct.ipynb``` notebook.
+
 ![sm2](images/sm2.png "sm2")
 
 Select ```conda_python3``` kernel.
 ![sm3](images/sm3.png "sm3")
 
 You will need to click through and run code for the first few cells.  This will install the pre-requisite python libraries needed for the demo code.
+
 ![sm4](images/sm4.png "sm4")
 
 2. Using the Sample Python Script
