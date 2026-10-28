@@ -4,3 +4,4 @@
 ssh_key.pem
 terraform.tfstate
 test-inference-scripts/
+terraform.tfstate.backup

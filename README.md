@@ -6,7 +6,7 @@ Welcome to the SageMaker AI Playground! 🤖 This repository provides a Terrafor
 
 This project was created to provide a ready-to-use "playground" for running generative AI workloads, specifically for cybersecurity research, with minimal manual setup. It deploys two core, decoupled resources:
 
-1. **A SageMaker Model Endpoint:** A dedicated, GPU-accelerated (ml.g5.2xlarge) environment for hosting a large language model. It uses the Hugging Face TGI (Text Generation Inference) container to serve the model efficiently.
+1. **A SageMaker Model Endpoint:** A dedicated, GPU-accelerated (ml.g5.xlarge) environment for hosting a large language model. It uses the Hugging Face TGI (Text Generation Inference) container to serve the model efficiently.
 
 2. **A SageMaker Notebook Instance:** A cost-effective CPU instance (ml.t3.medium) that serves as your development environment. It comes pre-loaded with sample Jupyter notebooks that are automatically configured to interact with the model sagemaker endpoint.
 
@@ -14,7 +14,7 @@ The environment automatically deploys Cisco's Foundation-Sec-8B-Instruct, an ope
 
 ## Key Features
 
-* Managed GPU Inference: Deploys a powerful SageMaker Endpoint on a ml.g5.2xlarge instance, optimized for hosting LLMs without the need to manage servers, Docker, or NVIDIA drivers.  This resource is created via ```model_endpoint_instance.tf```.
+* Managed GPU Inference: Deploys a powerful SageMaker Endpoint on a ml.g5.xlarge instance in us-east-2, optimized for hosting LLMs without the need to manage servers, Docker, or NVIDIA drivers.  This resource is created via ```model_endpoint_instance.tf```.
 
 * Hugging Face TGI Container: Uses the official Hugging Face Text Generation Inference container for high-performance, production-ready model serving.
 
@@ -30,12 +30,49 @@ The environment automatically deploys Cisco's Foundation-Sec-8B-Instruct, an ope
 
 This playground uses the following SageMaker instances by default. These can be customized in the Terraform files.
 
-| Resource | Instance Type | vCPU | Memory (GiB) | GPU Memory (GiB) | Hourly Cost (us-east-1) |
+| Resource | Instance Type | vCPU | Memory (GiB) | GPU Memory (GiB) | Hourly Cost |
 | :------- | :------: | -------: | -------: | -------: | -------: | 
-| SageMaker Endpoint | ml.g5.2xlarge | 8 | 32 | 24 | $1.388 |
-| SageMaker Notebook | ml.t3.medium | 2 | 4 | NA | $.058 |
+| SageMaker Endpoint (default) | ml.g5.xlarge | 4 | 16 | 24 | See pricing page |
+| SageMaker Endpoint (alternative) | ml.g5.2xlarge | 8 | 32 | 24 | $1.388 (us-east-1) |
+| SageMaker Notebook | ml.t3.medium | 2 | 4 | NA | $.058 (us-east-1) |
 
-**Note:** Always check the [AWS SageMaker Pricing page](https://aws.amazon.com/sagemaker/pricing/) to confirm the latest pricing in your region. The ```ml.g5.2xlarge``` instance is the recommended minimum for hosting the 8-billion parameter Foundation model.
+**Note:** Always check the [AWS SageMaker Pricing page](https://aws.amazon.com/sagemaker/pricing/) to confirm the latest pricing in your region. The 8-billion parameter Foundation model needs a GPU with 24 GiB of memory (A10G on ml.g5, or L4 on ml.g6). Instances with a 16 GiB GPU, such as ```ml.g4dn.2xlarge``` (T4), fail the endpoint health check because the model server runs out of GPU memory while loading.
+
+## Region and GPU Capacity ⚠️
+
+The default region is **us-east-2** (`aws_region` in ```model_endpoint_instance.tf```). This is the region and instance type combination that has deployed successfully most recently (October 2026).
+
+GPU instances are often in short supply. If AWS has no capacity for the requested instance type, the endpoint fails after 20 to 30 minutes with:
+
+```
+Unable to provision requested ML compute capacity due to InsufficientInstanceCapacity error.
+```
+
+This is an AWS capacity issue, not a configuration or quota problem (a quota problem shows ```ResourceLimitExceeded``` instead). A sign of it while you wait: no CloudWatch log stream appears under ```/aws/sagemaker/Endpoints/foundation-sec-8b-endpoint``` after about 10 minutes, because the container never started. In October 2026 these combinations all failed for capacity:
+
+| Region | Instance Type | Result |
+| :------- | :------: | :------- |
+| us-east-1 | ml.g5.2xlarge | InsufficientInstanceCapacity |
+| us-east-1 | ml.g6.2xlarge | InsufficientInstanceCapacity |
+| us-west-2 | ml.g6.2xlarge | InsufficientInstanceCapacity |
+| us-west-2 | ml.g5.2xlarge | InsufficientInstanceCapacity |
+| us-west-2 | ml.g5.xlarge | InsufficientInstanceCapacity |
+| **us-east-2** | **ml.g5.xlarge** | **InService** |
+
+If you hit this error, try one of the following:
+
+* **A different instance type with a 24 GiB GPU:** ```ml.g5.xlarge```, ```ml.g5.2xlarge```, ```ml.g6.xlarge```, or ```ml.g6.2xlarge```. Change ```instance_type``` in ```model_endpoint_instance.tf```.
+* **A different region.** Change three things to match: the ```aws_region``` variable default, the region in the ```hf_container_image``` URL (the same image is published in every region), and ```region``` in ```inference_query1.py```.
+* **Retry later.** Capacity often frees up outside US business hours.
+
+**Before switching regions**, destroy the failed SageMaker resources in the old region, or Terraform will lose track of them. The provider region comes from ```var.aws_region```, so you can target the old region on the command line:
+
+```
+terraform destroy -var aws_region=OLD_REGION \
+  -target=aws_sagemaker_endpoint.foundation_sec_8b_ep \
+  -target=aws_sagemaker_endpoint_configuration.foundation_sec_8b_cfg \
+  -target=aws_sagemaker_model.foundation_sec_8b
+```
 
 ## How to Manage Costs 💰
 
@@ -130,7 +167,7 @@ The primary way to interact with your AI playground is through the SageMaker Jup
 
 * **SageMaker Endpoint:** You can monitor the status of the model endpoint creation in the AWS Console under SageMaker > Inference > Endpoints. Wait for the status to change to InService.
 
-* **Notebook Instance:** The notebook instance runs a startup script. You can view the logs for this script in CloudWatch Logs under the log group /aws/sagemaker/NotebookInstances to ensure the sample repository was cloned correctly.
+* **Notebook Instance:** The notebook instance runs a startup script. You can view the logs for this script in CloudWatch Logs under the log group /aws/sagemaker/NotebookInstances to ensure the sample repository was cloned correctly. Python packages (CPU-only PyTorch, transformers, pandas, numpy, boto3) install in the background so the startup script stays under SageMaker's 5-minute limit. They can take a few minutes after the notebook opens; progress is logged to ```/home/ec2-user/SageMaker/pip-install.log```.
 
 # License
 This project is licensed under the MIT License, which allows for reuse and modification with attribution. See the LICENSE file for details. All included third-party tools and libraries maintain their respective licenses. Enjoy your AI playground responsibly!

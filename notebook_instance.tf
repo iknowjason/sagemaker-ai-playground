@@ -39,9 +39,10 @@ resource "aws_sagemaker_notebook_instance_lifecycle_configuration" "notebook_set
 
     echo "Running on_start lifecycle at $(date)"
     
-    # Install packages
-    echo "Installing packages"
-    /home/ec2-user/anaconda3/bin/pip install transformers torch pandas numpy boto3 --quiet
+    # Install packages in the background so the lifecycle script stays under the 5-minute limit.
+    # CPU-only torch: the default CUDA build is several GB and fills the root volume.
+    echo "Installing packages in the background (log: /home/ec2-user/SageMaker/pip-install.log)"
+    nohup sh -c '/home/ec2-user/anaconda3/bin/pip install --quiet --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu && /home/ec2-user/anaconda3/bin/pip install --quiet --no-cache-dir transformers pandas numpy boto3' > /home/ec2-user/SageMaker/pip-install.log 2>&1 &
 
     # Clone the repository manually
     echo "Cloning repository for jupyter notebook samples"

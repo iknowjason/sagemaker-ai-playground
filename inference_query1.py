@@ -3,7 +3,7 @@ from botocore.auth import SigV4Auth
 from botocore.awsrequest import AWSRequest
 from botocore.session import get_session
 
-region = "us-east-1"
+region = "us-east-2"
 endpoint_name = "foundation-sec-8b-endpoint"
 
 payload = {

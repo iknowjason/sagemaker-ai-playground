@@ -8,7 +8,11 @@ terraform {
 }
 
 variable "aws_region" {
-  default = "us-east-1"
+  default = "us-east-2"
+}
+
+provider "aws" {
+  region = var.aws_region
 }
 
 variable "hf_token" {
@@ -25,7 +29,7 @@ variable "hf_model_id" {
 
 variable "hf_container_image" {
   description = "The Hugging Face TGI container image"
-  default     = "763104351884.dkr.ecr.us-east-1.amazonaws.com/huggingface-pytorch-tgi-inference:2.7.0-tgi3.3.4-gpu-py311-cu124-ubuntu22.04"
+  default     = "763104351884.dkr.ecr.us-east-2.amazonaws.com/huggingface-pytorch-tgi-inference:2.7.0-tgi3.3.4-gpu-py311-cu124-ubuntu22.04"
 }
 
 resource "aws_iam_role" "sagemaker_execution_role" {
@@ -76,7 +80,7 @@ resource "aws_sagemaker_endpoint_configuration" "foundation_sec_8b_cfg" {
     variant_name           = "AllTraffic"
     model_name             = aws_sagemaker_model.foundation_sec_8b.name
     initial_instance_count = 1
-    instance_type          = "ml.g5.2xlarge"
+    instance_type          = "ml.g5.xlarge"
   }
 
   depends_on = [aws_sagemaker_model.foundation_sec_8b]
